@@ -10,13 +10,9 @@ dotenv.config();
 // Register routes here
 app.register(authRoute, { prefix: '/api/v1' });
 
-
-
-
-
-
-
-
+app.get('/', (req, res) => {
+    res.send('Hello, World!')
+});
 
 
 // Lister the servier

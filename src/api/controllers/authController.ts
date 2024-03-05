@@ -1,12 +1,44 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { IRegisterUser } from "../interface/register_user.molde"
-import { registerUserSchema } from "../schema/auth"
+import { ILoginUser, IRegisterUser } from "../interface/register_user.molde"
+import { loginSchema, registerUserSchema } from "../schema/auth"
 
 export const login = async (req: FastifyRequest, res: FastifyReply) => {
-    return res.status(200).send({
-        message: "Login Successfull",
-        status: 200
-    })
+    try {
+        const { email, password } = req.body as ILoginUser
+
+        if (!email || !password) {
+            return res.status(400).send({
+                message: "Bad Request",
+                error: "Please provide an email and password",
+                status: 400
+            });
+        } else {
+
+            // Create a new user object
+            const loginUser = await loginSchema({ email, password });
+
+            if (loginUser.length !== 0) {
+                return res.status(200).send({
+                    message: "Login Successful",
+                    status: 200,
+                    result: loginUser
+                });
+            } else {
+                return res.status(401).send({
+                    message: "Unauthorized",
+                    error: "Invalid email or password",
+                    status: 401
+                });
+            }
+        }
+
+    } catch (error) {
+        return res.status(500).send({
+            message: "Internal Server Error",
+            error: "Failed to register user",
+            status: 500
+        });
+    }
 }
 
 export const register = async (req: FastifyRequest, res: FastifyReply) => {
