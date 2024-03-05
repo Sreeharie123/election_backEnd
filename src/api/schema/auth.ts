@@ -1,4 +1,4 @@
-import { db } from "../../../config/config";
+import { db } from "../../database/config/config";
 import { IRegisterUser } from "../interface/register_user.molde";
 
 export const registerUserSchema = async (registerUser: IRegisterUser) => {

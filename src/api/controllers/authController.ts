@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { IRegisterUser } from "../db/interface/register_user.molde"
-import { registerUserSchema } from "../db/schema/auth"
+import { IRegisterUser } from "../interface/register_user.molde"
+import { registerUserSchema } from "../schema/auth"
 
 export const login = async (req: FastifyRequest, res: FastifyReply) => {
     return res.status(200).send({
